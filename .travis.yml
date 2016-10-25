@@ -1,6 +1,9 @@
 language: android
 jdk: oraclejdk8
 
+env:
+  - TERM=dumb
+
 script:
   - ./gradlew build -x lint
 
@@ -8,7 +11,7 @@ deploy:
   provider: releases
   api_key: $GITHUB_ACCESS_TOKEN
   file:
-    - build/outputs/apk/app-debug.apk
+    - app/build/outputs/apk/app-debug.apk
   skip_cleanup: true
   on:
     tags: true
