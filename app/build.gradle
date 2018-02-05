@@ -55,6 +55,7 @@ dependencies {
         exclude group: 'com.google.android', module: 'android'
     }
 
+    compile 'com.payneteasy:reader-i18n:1.0-2'
 
 }
 

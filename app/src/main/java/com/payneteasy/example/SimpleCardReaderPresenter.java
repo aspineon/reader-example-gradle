@@ -8,10 +8,14 @@ import com.payneteasy.android.sdk.processing.IProcessingStageListener;
 import com.payneteasy.android.sdk.processing.ProcessingContinuation;
 import com.payneteasy.android.sdk.processing.ProcessingStageEvent;
 import com.payneteasy.android.sdk.reader.*;
+import com.payneteasy.reader.i18n.IReaderI18nService;
+import com.payneteasy.reader.i18n.ReaderI18nServiceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 
 public class SimpleCardReaderPresenter implements ICardReaderPresenter {
 
@@ -19,10 +23,20 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
 
     private final TextView statusView;
     private final Activity activity;
+    private final IReaderI18nService translationService;
+    private final Locale defaultLocale = new Locale("ru");
 
     public SimpleCardReaderPresenter(Activity aActivity, TextView aView) {
         statusView = aView;
         activity = aActivity;
+        try {
+            translationService = new ReaderI18nServiceBuilder()
+                    .addPropertyFile(Locale.ENGLISH, "reader_en.properties")
+                    .addPropertyFile(new Locale("ru"), "reader_ru.properties")
+                    .build();
+        } catch (IOException e) {
+            throw new IllegalStateException("Error creating i18n service", e);
+        }
     }
 
 
@@ -72,17 +86,17 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
 
     @Override
     public void cardReaderStateChanged(CardReaderEvent cardReaderEvent) {
-        setStatus("cardReaderStateChanged: %s", cardReaderEvent);
+        setStatus("cardReaderStateChanged: %s", translationService.translateReaderEvent(defaultLocale, cardReaderEvent));
     }
 
     @Override
     public void onCardError(CardError cardError) {
-        setStatus("onCardError: %s", cardError);
+        setStatus("onCardError: %s", translationService.translateCardError(defaultLocale, cardError));
     }
 
     @Override
     public void onReaderNotSupported(CardReaderProblem aProblem) {
-        setStatus("onReaderNotSupported: %s", aProblem);
+        setStatus("onReaderNotSupported: %s", translationService.translateCardReaderProblem(defaultLocale, aProblem));
     }
 
     @Override
