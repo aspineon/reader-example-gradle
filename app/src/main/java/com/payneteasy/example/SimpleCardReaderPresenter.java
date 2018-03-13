@@ -60,7 +60,8 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
                 .listener(new IProcessingStageListener() {
                     @Override
                     public void onStageChanged(ProcessingStageEvent aEvent) {
-                        setStatus("processing: %s", aEvent);
+                        String message = translationService.translateProcessingEvent(defaultLocale, aEvent);
+                        setStatus(message);
                     }
                 })
                 .build();
