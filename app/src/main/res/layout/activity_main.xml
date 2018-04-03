@@ -6,13 +6,23 @@
               android:layout_height="match_parent">
 
     <Button
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Miura Shuttle Reader"
+            android:text="Run with Miura M006 or M010"
             android:id="@+id/button" android:layout_gravity="center_horizontal" android:onClick="startMiura"/>
+
     <Button
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test Reader"
+            android:text="Run with Spire SPm2"
+            android:id="@+id/button2" android:layout_gravity="center_horizontal" android:onClick="startSpire"/>
+
+    <Button
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Run with Test Reader"
             android:id="@+id/button3" android:layout_gravity="center_horizontal" android:onClick="startTest"/>
 </LinearLayout>

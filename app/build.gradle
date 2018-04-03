@@ -36,7 +36,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
 
     // Reader SDK
-    def readerVersion = '1.4-43'
+    def readerVersion = '1.4-48'
     compile 'com.payneteasy.android.reader:api:' + readerVersion
     compile 'com.payneteasy.android.reader:lib:' + readerVersion
     compile 'com.payneteasy.android.reader.readers:readers-common-bluetooth:' + readerVersion

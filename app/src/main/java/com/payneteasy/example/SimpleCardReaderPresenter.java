@@ -1,6 +1,8 @@
 package com.payneteasy.example;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.TextView;
 import com.payneteasy.android.sdk.card.BankCard;
 import com.payneteasy.android.sdk.processing.ConfigurationContinuation;
@@ -21,14 +23,16 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
 
     private final static Logger LOG = LoggerFactory.getLogger(SimpleCardReaderPresenter.class);
 
-    private final TextView statusView;
-    private final Activity activity;
+    Handler handler = new Handler(Looper.getMainLooper());
+
+    private final File      filesDir;
+    private final ICardView cardView;
     private final IReaderI18nService translationService;
     private final Locale defaultLocale = new Locale("ru");
 
-    public SimpleCardReaderPresenter(Activity aActivity, TextView aView) {
-        statusView = aView;
-        activity = aActivity;
+    public SimpleCardReaderPresenter(ICardView aCardView, File aFilesDir) {
+        filesDir = aFilesDir;
+        cardView = aCardView;
         try {
             translationService = new ReaderI18nServiceBuilder()
                     .addPropertyFile(Locale.ENGLISH, "reader_en.properties")
@@ -62,6 +66,12 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
                     public void onStageChanged(ProcessingStageEvent aEvent) {
                         String message = translationService.translateProcessingEvent(defaultLocale, aEvent);
                         setStatus(message);
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                cardView.stopReaderManager();
+                            }
+                        }, 3000);
                     }
                 })
                 .build();
@@ -72,12 +82,7 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
         final String outputText = String.format(aFormat, args);
         LOG.debug("Status: {}", outputText);
 
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                statusView.setText(outputText);
-            }
-        });
+        cardView.setStatusText(outputText);
     }
 
     @Override
@@ -108,7 +113,7 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
     @Override
     public ConfigurationContinuation onConfiguration() {
         return new ConfigurationContinuation.Builder()
-                .configDir              ( new File(activity.getFilesDir(), "miura-config"))
+                .configDir              ( new File(filesDir, "miura-config"))
                 .configurationBaseUrl   ( Config.SERVER_CONFIG_URL  )
                 .merchantLogin          ( Config.MERCHANT_LOGIN     )
                 .merchantControlKey     ( Config.MERCHANT_KEY       )

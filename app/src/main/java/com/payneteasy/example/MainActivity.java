@@ -20,6 +20,10 @@ public class MainActivity extends Activity {
         ActivityUtil.startActivity(this, ReaderActivity.class, new CardReaderInfo("miura", CardReaderType.MIURA, null));
     }
 
+    public void startSpire(View aView) {
+        ActivityUtil.startActivity(this, ReaderActivity.class, new CardReaderInfo("spire", CardReaderType.SPIRE_SPM2, null));
+    }
+
 
     public void startTest(View aView) {
         ActivityUtil.startActivity(this, ReaderActivity.class, CardReaderInfo.TEST);

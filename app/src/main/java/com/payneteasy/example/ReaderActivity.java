@@ -2,6 +2,8 @@ package com.payneteasy.example;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.WindowManager;
 import android.widget.TextView;
 import com.payneteasy.android.sdk.reader.CardReaderFactory;
@@ -14,12 +16,13 @@ import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
-public class ReaderActivity extends Activity  {
+public class ReaderActivity extends Activity implements ICardView  {
 
     private final static Logger LOG = LoggerFactory.getLogger(ReaderActivity.class);
 
     private ICardReaderManager cardReaderManager;
     private TextView statusView;
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +62,10 @@ public class ReaderActivity extends Activity  {
     private void initReader() {
         CardReaderInfo cardReader = ActivityUtil.getFirstParameter(this, CardReaderInfo.class);
 
-        BigDecimal amount = new BigDecimal(1);
+        BigDecimal amount = new BigDecimal(3);
         String currency = "RUB";
 
-        SimpleCardReaderPresenter presenter = new SimpleCardReaderPresenter(this, statusView);
+        SimpleCardReaderPresenter presenter = new SimpleCardReaderPresenter(this, getFilesDir());
 
         cardReaderManager = CardReaderFactory.findManager(this, cardReader, presenter, amount, currency, null);
     }
@@ -71,4 +74,25 @@ public class ReaderActivity extends Activity  {
         statusView = (TextView) findViewById(R.id.statusView);
     }
 
+    @Override
+    public void setStatusText(final String aText) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                statusView.setText(aText);
+            }
+        });
+    }
+
+    @Override
+    public void stopReaderManager() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(cardReaderManager != null) {
+                    finish();
+                }
+            }
+        }, 3000);
+    }
 }
