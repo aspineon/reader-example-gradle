@@ -22,7 +22,7 @@ deploy:
   on:
     tags: true
 
-cache:
-  directories:
-    - $HOME/.m2
-    - $HOME/.gradle/wrapper/
+#cache:
+#  directories:
+#    - $HOME/.m2
+#    - $HOME/.gradle/wrapper/
