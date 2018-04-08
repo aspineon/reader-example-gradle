@@ -46,7 +46,7 @@ dependencies {
     compile 'com.payneteasy.android.reader.readers:readers-test:' + readerVersion
 
     // translations for Reader SDK
-    compile 'com.payneteasy:reader-i18n:1.0-7'
+    compile 'com.payneteasy:reader-i18n:1.0-8'
 
     // test for slf4j
     compile 'org.slf4j:slf4j-api:1.7.21'
