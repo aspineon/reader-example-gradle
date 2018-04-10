@@ -30,7 +30,7 @@ public class ActivityUtil {
         Bundle bundle = new Bundle();
         bundle.putSerializable("parameter-0", aParameter0);
         if(aParameter1 != null) {
-            bundle.putSerializable("parameter-1", aParameter0);
+            bundle.putSerializable("parameter-1", aParameter1);
         }
 
         final Intent intent = new Intent(aContext, aActivityToStart);
