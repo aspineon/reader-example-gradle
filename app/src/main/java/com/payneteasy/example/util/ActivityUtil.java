@@ -22,9 +22,16 @@ public class ActivityUtil {
     }
 
     public static void startActivity(final Context aContext, Class<? extends Activity> aActivityToStart, Serializable aParameter) {
+        startActivity(aContext, aActivityToStart, aParameter, null);
+    }
+
+    public static void startActivity(final Context aContext, Class<? extends Activity> aActivityToStart, Serializable aParameter0, Serializable aParameter1) {
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable("parameter-0", aParameter);
+        bundle.putSerializable("parameter-0", aParameter0);
+        if(aParameter1 != null) {
+            bundle.putSerializable("parameter-1", aParameter0);
+        }
 
         final Intent intent = new Intent(aContext, aActivityToStart);
         intent.putExtras(bundle);
@@ -58,6 +65,14 @@ public class ActivityUtil {
     public static <T extends Serializable> T getFirstParameter(Activity aContext, Class<T> aParameterClass) {
         if(aContext.getIntent()!=null && aContext.getIntent().getExtras()!=null ) {
             return (T) aContext.getIntent().getExtras().get("parameter-0");
+        } else {
+            return null;
+        }
+    }
+
+    public static <T extends Serializable> T getSecondParameter(Activity aContext, Class<T> aParameterClass) {
+        if(aContext.getIntent()!=null && aContext.getIntent().getExtras()!=null ) {
+            return (T) aContext.getIntent().getExtras().get("parameter-1");
         } else {
             return null;
         }

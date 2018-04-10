@@ -60,9 +60,12 @@ public class ReaderActivity extends Activity implements ICardView  {
     }
 
     private void initReader() {
-        CardReaderInfo cardReader = ActivityUtil.getFirstParameter(this, CardReaderInfo.class);
+        CardReaderInfo cardReader = ActivityUtil.getFirstParameter (this, CardReaderInfo.class);
+        BigDecimal     amount     = ActivityUtil.getSecondParameter(this, BigDecimal.class);
+        if(amount == null) {
+            amount = new BigDecimal(3);
+        }
 
-        BigDecimal amount = new BigDecimal(3);
         String currency = "RUB";
 
         SimpleCardReaderPresenter presenter = new SimpleCardReaderPresenter(this, getFilesDir());
