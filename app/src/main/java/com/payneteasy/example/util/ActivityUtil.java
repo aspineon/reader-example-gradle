@@ -62,6 +62,36 @@ public class ActivityUtil {
 
     }
 
+    public static void startActivityForResult(final int aRequestCode, final Activity activity, Class<? extends Activity> aActivityToStart, Serializable aParameter0, Serializable aParameter1) {
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("parameter-0", aParameter0);
+        if(aParameter1 != null) {
+            bundle.putSerializable("parameter-1", aParameter1);
+        }
+
+        final Intent intent = new Intent(activity, aActivityToStart);
+        intent.putExtras(bundle);
+
+        if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+
+            // On UI thread.
+            activity.startActivityForResult(intent, aRequestCode);
+
+        } else {
+            LOG.warn("Starting activity "+activity.getClass().getSimpleName()+" in runOnUiThread", new RuntimeException("runOnUiThread"));
+
+            // Not on UI thread.
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    activity.startActivityForResult(intent, aRequestCode);
+                }
+            });
+        }
+
+    }
+
     public static <T extends Serializable> T getFirstParameter(Activity aContext, Class<T> aParameterClass) {
         if(aContext.getIntent()!=null && aContext.getIntent().getExtras()!=null ) {
             return (T) aContext.getIntent().getExtras().get("parameter-0");

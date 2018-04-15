@@ -63,15 +63,17 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
                 .customerCountry    ( "RUS"                 )
                 .listener(new IProcessingStageListener() {
                     @Override
-                    public void onStageChanged(ProcessingStageEvent aEvent) {
+                    public void onStageChanged(final ProcessingStageEvent aEvent) {
                         String message = translationService.translateProcessingEvent(defaultLocale, aEvent);
                         setStatus(message);
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                cardView.stopReaderManager();
-                            }
-                        }, 3000);
+                        if(aEvent.type == ProcessingStageEvent.Type.RESULT) {
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    cardView.stopReaderManager(aEvent.response);
+                                }
+                            }, 3000);
+                        }
                     }
                 })
                 .build();
@@ -103,6 +105,7 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
     @Override
     public void onReaderNotSupported(CardReaderProblem aProblem) {
         setStatus("onReaderNotSupported: %s", translationService.translateCardReaderProblem(defaultLocale, aProblem));
+        cardView.stopReaderManager(aProblem);
     }
 
     @Override

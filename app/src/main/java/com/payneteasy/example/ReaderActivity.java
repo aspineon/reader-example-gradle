@@ -1,16 +1,21 @@
 package com.payneteasy.example;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 import com.payneteasy.android.sdk.reader.CardReaderFactory;
 import com.payneteasy.android.sdk.reader.CardReaderInfo;
+import com.payneteasy.android.sdk.reader.CardReaderProblem;
 import com.payneteasy.android.sdk.reader.ICardReaderManager;
 import com.payneteasy.example.app1.R;
 import com.payneteasy.example.util.ActivityUtil;
+import com.payneteasy.paynet.processing.response.StatusResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,7 +93,13 @@ public class ReaderActivity extends Activity implements ICardView  {
     }
 
     @Override
-    public void stopReaderManager() {
+    public void stopReaderManager(StatusResponse aResponse) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("status-response", aResponse);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        setResult(20, intent);
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -97,5 +108,15 @@ public class ReaderActivity extends Activity implements ICardView  {
                 }
             }
         }, 3000);
+    }
+
+    @Override
+    public void stopReaderManager(CardReaderProblem aProblem) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("problem", aProblem);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        setResult(20, intent);
+        finish();
     }
 }
