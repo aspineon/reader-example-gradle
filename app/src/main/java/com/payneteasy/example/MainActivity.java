@@ -43,14 +43,20 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(data == null) {
+            return;
+        }
         Bundle extras = data.getExtras();
+        if(extras == null) {
+            return;
+        }
         StatusResponse statusResponse = (StatusResponse) extras.get("status-response");
         CardReaderProblem  problem = (CardReaderProblem) extras.get("problem");
 
         if(problem != null) {
             Toast.makeText(this, "Error: " + problem, Toast.LENGTH_LONG)
                     .show();
-        } else {
+        } else if( statusResponse != null) {
             Toast.makeText(this, statusResponse.getOrderId() + " " + statusResponse.getStatus(), Toast.LENGTH_LONG)
                     .show();
         }
