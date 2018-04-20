@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.payneteasy.android.sdk.reader.CardErrorType;
 import com.payneteasy.android.sdk.reader.CardReaderInfo;
 import com.payneteasy.android.sdk.reader.CardReaderProblem;
 import com.payneteasy.android.sdk.reader.CardReaderType;
@@ -50,15 +51,22 @@ public class MainActivity extends Activity {
         if(extras == null) {
             return;
         }
-        StatusResponse statusResponse = (StatusResponse) extras.get("status-response");
-        CardReaderProblem  problem = (CardReaderProblem) extras.get("problem");
 
+        StatusResponse     statusResponse = (StatusResponse) extras.get("status-response");
+        CardReaderProblem  problem        = (CardReaderProblem) extras.get("problem");
+        CardErrorType      errorType      = (CardErrorType) extras.get("card-error-type");
+
+        String message;
         if(problem != null) {
-            Toast.makeText(this, "Error: " + problem, Toast.LENGTH_LONG)
-                    .show();
+            message = "Error: " + problem;
         } else if( statusResponse != null) {
-            Toast.makeText(this, statusResponse.getOrderId() + " " + statusResponse.getStatus(), Toast.LENGTH_LONG)
-                    .show();
+            message = statusResponse.getOrderId() + " " + statusResponse.getStatus();
+        } else if( errorType != null ) {
+            message = "Error: " + errorType;
+        } else {
+            message = "Unknown error";
         }
+
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }

@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.payneteasy.android.sdk.reader.CardError;
 import com.payneteasy.android.sdk.reader.CardReaderFactory;
 import com.payneteasy.android.sdk.reader.CardReaderInfo;
 import com.payneteasy.android.sdk.reader.CardReaderProblem;
@@ -100,6 +101,10 @@ public class ReaderActivity extends Activity implements ICardView  {
         intent.putExtras(bundle);
         setResult(20, intent);
 
+        finishWithDelay();
+    }
+
+    private void finishWithDelay() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -117,6 +122,18 @@ public class ReaderActivity extends Activity implements ICardView  {
         Intent intent = new Intent();
         intent.putExtras(bundle);
         setResult(20, intent);
-        finish();
+
+        finishWithDelay();
+    }
+
+    @Override
+    public void stopReaderManager(CardError aCardError) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("card-error-type", aCardError.getType());
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        setResult(20, intent);
+
+        finishWithDelay();
     }
 }

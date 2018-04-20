@@ -100,6 +100,7 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
     @Override
     public void onCardError(CardError cardError) {
         setStatus("onCardError: %s", translationService.translateCardError(defaultLocale, cardError));
+        cardView.stopReaderManager(cardError);
     }
 
     @Override
