@@ -10,6 +10,8 @@ import com.payneteasy.android.sdk.reader.CardErrorType;
 import com.payneteasy.android.sdk.reader.CardReaderInfo;
 import com.payneteasy.android.sdk.reader.CardReaderProblem;
 import com.payneteasy.android.sdk.reader.CardReaderType;
+import com.payneteasy.android.sdk.reader.CardReaderVersion;
+import com.payneteasy.android.sdk.usb.UsbPermissionResolver;
 import com.payneteasy.example.app1.R;
 import com.payneteasy.example.util.ActivityUtil;
 import com.payneteasy.paynet.processing.response.StatusResponse;
@@ -18,10 +20,27 @@ import java.math.BigDecimal;
 
 public class MainActivity extends Activity {
 
+    private final UsbPermissionResolver usbPermissionResolver = new UsbPermissionResolver();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setTitle("Example, sdk version " + CardReaderVersion.getVersion());
+        usbPermissionResolver.checkPermission(getIntent(), this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        usbPermissionResolver.checkPermission(intent, this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        usbPermissionResolver.unregister(this);
     }
 
     public void startMiura(View aView) {
@@ -40,6 +59,24 @@ public class MainActivity extends Activity {
 
     public void startTest(View aView) {
         ActivityUtil.startActivityForResult(10, this, ReaderActivity.class, CardReaderInfo.TEST, null);
+    }
+
+    public void startVerifoneUsb(View aView) {
+        ActivityUtil.startActivityForResult(10
+                , this
+                , ReaderActivity.class
+                , new CardReaderInfo("verifone", CardReaderType.INPAS_VERIFONE_USB, null)
+                , new BigDecimal("1.02")
+        );
+    }
+
+    public void startPaxUsb(View aView) {
+        ActivityUtil.startActivityForResult(10
+                , this
+                , ReaderActivity.class
+                , new CardReaderInfo("pax", CardReaderType.INPAS_PAX_USB, null)
+                , new BigDecimal("1.02")
+        );
     }
 
     @Override

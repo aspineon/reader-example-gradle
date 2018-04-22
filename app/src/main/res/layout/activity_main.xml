@@ -27,4 +27,20 @@
             android:id="@+id/button3" android:layout_gravity="center_horizontal" android:onClick="startTest"
             android:visibility="gone"
         />
+
+    <Button
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Run with Verifone USB"
+            android:id="@+id/button4" android:layout_gravity="center_horizontal" android:onClick="startVerifoneUsb"
+        />
+
+    <Button
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Run with PAX USB"
+            android:id="@+id/button5" android:layout_gravity="center_horizontal" android:onClick="startPaxUsb"
+        />
 </LinearLayout>

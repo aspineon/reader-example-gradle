@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 0x1234 / 0x0101  PAX / S80 -->
+    <usb-device vendor-id="4660" product-id="257" class="255" subclass="0" protocol="0"/>
+
+    <!-- 0x11CA / 0x0219  VeriFone Inc / Trident USB Device 1.1 / bInterfaceClass = 10 CDC Data -->
+    <usb-device vendor-id="4554" product-id="537" class="10" subclass="0" protocol="0"/>
+
+</resources>
