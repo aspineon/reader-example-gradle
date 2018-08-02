@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("Example, sdk version " + CardReaderVersion.getVersion());
+        setTitle("Example, sdk version " + CardReaderVersion.getSdkVersion());
         usbPermissionResolver.checkPermission(getIntent(), this);
     }
 
@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
 
 
     public void startTest(View aView) {
-        ActivityUtil.startActivityForResult(10, this, ReaderActivity.class, CardReaderInfo.TEST, null);
+//        ActivityUtil.startActivityForResult(10, this, ReaderActivity.class, CardReaderInfo.TEST, null);
     }
 
     public void startVerifoneUsb(View aView) {

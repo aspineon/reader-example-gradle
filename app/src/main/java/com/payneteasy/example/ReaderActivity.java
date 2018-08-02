@@ -61,8 +61,10 @@ public class ReaderActivity extends Activity implements ICardView  {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        cardReaderManager.onActivityDestroy();
-        cardReaderManager  = null;
+        if(cardReaderManager != null) {
+            cardReaderManager.onActivityDestroy();
+            cardReaderManager  = null;
+        }
     }
 
     private void initReader() {
