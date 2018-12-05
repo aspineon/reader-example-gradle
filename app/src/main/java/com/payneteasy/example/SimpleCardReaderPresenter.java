@@ -122,6 +122,7 @@ public class SimpleCardReaderPresenter implements ICardReaderPresenter {
                 .merchantLogin          ( Config.MERCHANT_LOGIN     )
                 .merchantControlKey     ( Config.MERCHANT_KEY       )
                 .merchantEndPointId     ( Config.END_POINT_ID       )
+                .merchantName           ( Config.MERCHANT_NAME      ) // For Spire SPm2. Only Latin characters supported.
                 .build();
     }
 }

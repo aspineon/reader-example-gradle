@@ -9,4 +9,6 @@ public class Config {
     public static final String MERCHANT_KEY      = "YOUR_CONTROL_KEY";
 
     public static final int    END_POINT_ID      = 1; //
+
+    public static final String MERCHANT_NAME     = "Merchant Name"; // should be in Latin
 }
