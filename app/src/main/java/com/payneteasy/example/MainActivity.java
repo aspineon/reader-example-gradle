@@ -79,6 +79,15 @@ public class MainActivity extends Activity {
         );
     }
 
+    public void startTps900(View aView) {
+        ActivityUtil.startActivityForResult(10
+                , this
+                , ReaderActivity.class
+                , new CardReaderInfo("tps900", CardReaderType.TELPO_TPS900, null)
+                , new BigDecimal("1.00")
+        );
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(data == null) {

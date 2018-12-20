@@ -43,4 +43,12 @@
             android:text="Run with PAX USB"
             android:id="@+id/button5" android:layout_gravity="center_horizontal" android:onClick="startPaxUsb"
         />
+
+    <Button
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Run with TPS900"
+            android:id="@+id/button6" android:layout_gravity="center_horizontal" android:onClick="startTps900"
+        />
 </LinearLayout>
