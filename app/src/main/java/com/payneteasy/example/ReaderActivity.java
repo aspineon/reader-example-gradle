@@ -44,24 +44,14 @@ public class ReaderActivity extends Activity implements ICardView  {
         initReader();
 
         cardReaderManager.onActivityCreate(this, savedInstanceState);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         cardReaderManager.onActivityResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        cardReaderManager.onActivityPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if(cardReaderManager != null) {
+            cardReaderManager.onActivityPause();
             cardReaderManager.onActivityDestroy();
             cardReaderManager  = null;
         }
