@@ -1,8 +1,21 @@
+// LAMBDA
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.1.0'
+        classpath 'com.android.tools.build:gradle:3.3.0'
+    }
+}
+
+
 apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.payneteasy.example.app1"
@@ -80,18 +93,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
-// LAMBDA
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
-    }
-
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.1.0'
-        classpath 'com.android.tools.build:gradle:3.1.4'
-    }
-}
 
 apply plugin: 'com.android.application' //or apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
