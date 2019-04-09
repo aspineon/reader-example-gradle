@@ -88,6 +88,15 @@ public class MainActivity extends Activity {
         );
     }
 
+    public void reversalTps900(View aView) {
+        ActivityUtil.startActivityForResult(10
+                , this
+                , ReaderActivity.class
+                , new CardReaderInfo("reversal", CardReaderType.TELPO_TPS900, null)
+                , new BigDecimal("1.00")
+        );
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(data == null) {

@@ -1,11 +1,15 @@
 package com.payneteasy.example;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.payneteasy.android.sdk.reader.CardError;
@@ -13,6 +17,7 @@ import com.payneteasy.android.sdk.reader.CardReaderFactory;
 import com.payneteasy.android.sdk.reader.CardReaderInfo;
 import com.payneteasy.android.sdk.reader.CardReaderProblem;
 import com.payneteasy.android.sdk.reader.ICardReaderManager;
+import com.payneteasy.android.sdk.reader.ReversalSessionParameters;
 import com.payneteasy.example.app1.R;
 import com.payneteasy.example.util.ActivityUtil;
 import com.payneteasy.paynet.processing.response.StatusResponse;
@@ -43,7 +48,31 @@ public class ReaderActivity extends Activity implements ICardView  {
 
         initReader();
 
-        cardReaderManager.startSaleSession(this);
+        CardReaderInfo cardReader = ActivityUtil.getFirstParameter (this, CardReaderInfo.class);
+        if(cardReader.name.equals("reversal")) {
+            startReversal();
+        } else {
+            cardReaderManager.startSaleSession(this);
+        }
+    }
+
+    private void startReversal() {
+        final EditText input = new EditText(this);
+        new AlertDialog.Builder(this)
+                .setTitle("Reversal")
+                .setMessage("Enter Paynet Order ID")
+                .setView(input)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Editable value = input.getText();
+                        cardReaderManager.startReversalSession(ReaderActivity.this, new ReversalSessionParameters(Long.parseLong(value+""), "test reversal"));
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Do nothing.
+            }
+        }).show();
+
     }
 
     @Override
