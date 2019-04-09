@@ -56,7 +56,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.3.1'
 
     // Reader SDK
-    def readerVersion = '1.4-76'
+    def readerVersion = '1.4-77'
     implementation ('com.payneteasy.android.reader:api:' + readerVersion) {
         exclude group: 'junit', module: 'junit'
     }
