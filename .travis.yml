@@ -18,6 +18,7 @@ before_install:
   - yes | sdkmanager "platforms;android-26"
   
 script:
+  - yes | $ANDROID_HOME/tools/bin/sdkmanager --licenses || echo OK
   - ./gradlew build -x lint
 
 deploy:
