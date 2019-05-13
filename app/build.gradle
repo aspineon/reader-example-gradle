@@ -1,3 +1,7 @@
+dependencyCheck {
+    format='XML'
+}
+
 // LAMBDA
 buildscript {
     repositories {
