@@ -8,14 +8,13 @@ buildscript {
     dependencies {
         classpath 'me.tatarka:gradle-retrolambda:3.1.0'
         classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath "org.owasp:dependency-check-gradle:${property('owasp.dependencyCheck.version')}"
+
     }
 }
 
-plugins {
-    id "org.owasp.dependencycheck" version "5.0.0-M2"
-}
-
 apply plugin: 'com.android.application'
+apply plugin: 'org.owasp.dependencycheck'
 
 android {
     compileSdkVersion 26
@@ -93,7 +92,7 @@ dependencies {
 }
 
 dependencyCheck {
-    format='XML'
+    format = "${property('owasp.dependencyCheck.format')}"
 }
 
 apply plugin: 'com.android.application' //or apply plugin: 'java'
