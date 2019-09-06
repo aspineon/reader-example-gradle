@@ -3,11 +3,11 @@ buildscript {
     repositories {
         mavenCentral()
         google()
+        jcenter()
     }
 
     dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.1.0'
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath "org.owasp:dependency-check-gradle:${property('owasp.dependencyCheck.version')}"
 
     }
@@ -17,12 +17,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.owasp.dependencycheck'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.payneteasy.example.app1"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -37,6 +37,10 @@ android {
 
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 }
 
@@ -96,4 +100,3 @@ dependencyCheck {
 }
 
 apply plugin: 'com.android.application' //or apply plugin: 'java'
-apply plugin: 'me.tatarka.retrolambda'
