@@ -59,7 +59,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.3.1'
 
     // Reader SDK
-    def readerVersion = '1.4-79'
+    def readerVersion = '1.4-86'
     implementation ('com.payneteasy.android.reader:api:' + readerVersion) {
         exclude group: 'junit', module: 'junit'
     }
@@ -84,7 +84,7 @@ dependencies {
     }
 
     // translations for Reader SDK
-    implementation 'com.payneteasy:reader-i18n:1.0-11'
+    implementation 'com.payneteasy:reader-i18n:1.0-14'
 
     // test for slf4j
     implementation 'org.slf4j:slf4j-api:1.7.21'
